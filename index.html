@@ -54,7 +54,7 @@
 </head>
 <body>
   <h1>Instalá las apps en la tele</h1>
-  <p class="bajada">Elegí una con las flechas del control y apretá OK. Cuando termine de bajar, apretá <b>Instalar</b>. Después se actualizan solas.</p>
+  <p class="bajada">Elegí una con las flechas del control y apretá OK. Cuando termine de bajar, apretá <b>Instalar</b>. Estas tres se actualizan solas.</p>
 
   <div class="apps">
     <a class="app" href="pelotalibre.apk">
@@ -103,7 +103,42 @@
     </a>
   </div>
 
-  <h2>Para que se actualicen solas (una sola vez por tele)</h2>
+  <h2>Otras apps</h2>
+  <p class="bajada">Estas no se actualizan solas: cuando salga una versión nueva, se vuelve a bajar de acá.</p>
+  <div class="apps otras">
+    <a class="app" href="mxltv.apk">
+      <img class="icono" src="iconos/mxltv.png" alt="">
+      <p class="nombre">MXL TV</p>
+      <p class="que">Versión 3.2.5</p>
+      <span class="boton">Bajar e instalar</span>
+    </a>
+    <a class="app" href="mxlmovies.apk">
+      <img class="icono" src="iconos/mxlmovies.png" alt="">
+      <p class="nombre">MXL Movies</p>
+      <p class="que">Versión 3.1.1</p>
+      <span class="boton">Bajar e instalar</span>
+    </a>
+    <a class="app" href="xuper.apk">
+      <img class="icono" src="iconos/xuper.png" alt="">
+      <p class="nombre">Xuper</p>
+      <p class="que">Versión 4.34.4</p>
+      <span class="boton">Bajar e instalar</span>
+    </a>
+    <a class="app" href="saltamontes.apk">
+      <img class="icono" src="iconos/saltamontes.png" alt="">
+      <p class="nombre">Saltamontes</p>
+      <p class="que">Versión 1.9.0</p>
+      <span class="boton">Bajar e instalar</span>
+    </a>
+    <a class="app" href="saltamontes-lite.apk">
+      <img class="icono" src="iconos/saltamontes-lite.png" alt="">
+      <p class="nombre">Saltamontes Lite</p>
+      <p class="que">Versión 1.3.0</p>
+      <span class="boton">Bajar e instalar</span>
+    </a>
+  </div>
+
+  <h2>Para que Pelota Libre, Flixer y Cuevana se actualicen solas (una sola vez por tele)</h2>
   <div class="pasos">
     <div class="paso">
       <h3>Fire TV (Amazon)</h3>
@@ -125,16 +160,24 @@
 
 <script>
   // Con el control remoto: las flechas pasan de una app a otra y OK la baja.
+  // Se va a la tarjeta más cercana en la dirección de la flecha (hay dos grillas).
   var apps = Array.prototype.slice.call(document.querySelectorAll('.app'));
   if (apps.length) apps[0].focus();
   document.addEventListener('keydown', function (e) {
-    var i = apps.indexOf(document.activeElement);
-    if (i === -1) return;
-    var columnas = getComputedStyle(document.querySelector('.apps')).gridTemplateColumns.split(' ').length;
-    var paso = { ArrowRight: 1, ArrowLeft: -1, ArrowDown: columnas, ArrowUp: -columnas }[e.key];
-    if (!paso) return;
-    var j = i + paso;
-    if (j >= 0 && j < apps.length) { apps[j].focus(); e.preventDefault(); }
+    var dir = { ArrowRight: [1, 0], ArrowLeft: [-1, 0], ArrowDown: [0, 1], ArrowUp: [0, -1] }[e.key];
+    if (!dir || apps.indexOf(document.activeElement) === -1) return;
+    var centro = function (el) { var r = el.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; };
+    var a = centro(document.activeElement), mejor = null, menor = Infinity;
+    apps.forEach(function (el) {
+      if (el === document.activeElement) return;
+      var b = centro(el), dx = b[0] - a[0], dy = b[1] - a[1];
+      var avance = dx * dir[0] + dy * dir[1];
+      if (avance <= 1) return;
+      var costado = Math.abs(dir[0] ? dy : dx);
+      var d = avance + costado * 2;
+      if (d < menor) { menor = d; mejor = el; }
+    });
+    if (mejor) { mejor.focus(); mejor.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); e.preventDefault(); }
   });
 </script>
 </body>
