@@ -185,8 +185,8 @@
 <p class="bajada" id="navegador" style="margin-top:5vh"></p>
 <script>
   // Versión del motor que abre la página: en un TV box dice si ya usa el WebView nuevo.
-  var m = navigator.userAgent.match(/Chrome\/(\d+)/);
-  document.getElementById('navegador').textContent = 'Navegador de este aparato: ' + (m ? 'versión ' + m[1] + (+m[1] < 100 ? ' (vieja: instalá el Navegador para TV box)' : ' (al día)') : navigator.userAgent);
+  var m = navigator.userAgent.match(/Chrome\/(\d+)/), a = navigator.userAgent.match(/Android ([\d.]+)/);
+  document.getElementById('navegador').textContent = (a ? 'Android ' + a[1] + ' · ' : '') + 'Navegador de este aparato: ' + (m ? 'versión ' + m[1] + (+m[1] < 100 ? ' (vieja: instalá el Navegador para TV box)' : ' (al día)') : navigator.userAgent);
 </script>
 <script>
   // Con el control remoto: las flechas pasan de una app a otra y OK la baja.
