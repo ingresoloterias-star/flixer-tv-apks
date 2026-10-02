@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Apps para la tele</title>
+<style>
+  :root {
+    --fondo: #0f1115;
+    --tarjeta: #1a1d24;
+    --borde: #2a2e38;
+    --texto: #f2f3f5;
+    --suave: #a7adb9;
+    --foco: #ffd54a;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--fondo); color: var(--texto); }
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    padding: 4vh 4vw 6vh;
+    line-height: 1.4;
+  }
+  h1 { font-size: clamp(28px, 4.2vw, 56px); margin: 0 0 .3em; letter-spacing: -.01em; }
+  .bajada { font-size: clamp(16px, 1.9vw, 26px); color: var(--suave); margin: 0 0 4vh; max-width: 60ch; }
+  .apps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5vw; }
+  .app {
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+    padding: 3.5vh 2vw 3vh; border-radius: 22px; background: var(--tarjeta);
+    border: 4px solid var(--borde); color: inherit; text-decoration: none;
+    outline: none; transition: transform .12s ease, border-color .12s ease;
+  }
+  .app:focus, .app:hover { border-color: var(--foco); transform: scale(1.04); }
+  .icono { width: clamp(96px, 12vw, 180px); height: auto; border-radius: 24%; margin-bottom: 2.2vh; }
+  .nombre { font-size: clamp(22px, 2.6vw, 40px); font-weight: 700; margin: 0; }
+  .que { font-size: clamp(14px, 1.5vw, 22px); color: var(--suave); margin: .3em 0 2.2vh; }
+  .boton {
+    font-size: clamp(16px, 1.7vw, 26px); font-weight: 700; padding: .55em 1.2em;
+    border-radius: 999px; background: var(--texto); color: #111;
+  }
+  .app:focus .boton, .app:hover .boton { background: var(--foco); }
+  h2 { font-size: clamp(20px, 2.4vw, 34px); margin: 6vh 0 2vh; }
+  .pasos { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5vw; }
+  .paso { background: var(--tarjeta); border: 1px solid var(--borde); border-radius: 16px; padding: 2.5vh 2vw; }
+  .paso h3 { font-size: clamp(17px, 1.8vw, 26px); margin: 0 0 1vh; }
+  .paso ol { margin: 0; padding-left: 1.3em; font-size: clamp(15px, 1.55vw, 22px); color: var(--suave); }
+  .paso li { margin: .35em 0; }
+  .paso b { color: var(--texto); }
+  @media (max-width: 700px) {
+    body { padding: 20px 16px 40px; }
+    .apps, .pasos { grid-template-columns: 1fr; gap: 16px; }
+    .app { padding: 22px 16px; }
+  }
+</style>
+</head>
+<body>
+  <h1>Instalá las apps en la tele</h1>
+  <p class="bajada">Elegí una con las flechas del control y apretá OK. Cuando termine de bajar, apretá <b>Instalar</b>. Después se actualizan solas.</p>
+
+  <div class="apps">
+    <a class="app" href="https://github.com/ingresoloterias-star/flixer-tv-apks/releases/latest/download/pelotalibre.apk">
+      <svg class="icono" viewBox="18 18 72 72" aria-hidden="true">
+        <rect x="18" y="18" width="72" height="72" fill="#1E8E3E"/>
+        <defs><clipPath id="pelota"><circle cx="54" cy="54" r="26"/></clipPath></defs>
+        <circle cx="54" cy="54" r="26" fill="#fff"/>
+        <path d="M54,44.5 L63,51 L59.6,61.5 L48.4,61.5 L45,51 Z" fill="#111"/>
+        <path d="M54,44.5 L54,32 M63,51 L74.5,46.5 M59.6,61.5 L66.5,71.5 M48.4,61.5 L41.5,71.5 M45,51 L33.5,46.5" stroke="#111" stroke-width="2.2" stroke-linecap="round"/>
+        <g clip-path="url(#pelota)" fill="#111">
+          <path d="M54,32 L61.5,27 L54,22 L46.5,27 Z"/><path d="M74.5,46.5 L83,44 L82,35 L74,38 Z"/>
+          <path d="M66.5,71.5 L72.5,79 L79,73 L73,66 Z"/><path d="M41.5,71.5 L35.5,79 L29,73 L35,66 Z"/>
+          <path d="M33.5,46.5 L25,44 L26,35 L34,38 Z"/>
+        </g>
+        <circle cx="54" cy="54" r="26" fill="none" stroke="#111" stroke-width="2"/>
+      </svg>
+      <p class="nombre">Pelota Libre TV</p>
+      <p class="que">Fútbol y canales deportivos</p>
+      <span class="boton">Bajar e instalar</span>
+    </a>
+
+    <a class="app" href="https://github.com/ingresoloterias-star/flixer-tv-apks/releases/latest/download/flixer.apk">
+      <svg class="icono" viewBox="18 18 72 72" aria-hidden="true">
+        <rect x="18" y="18" width="72" height="72" fill="#fff"/>
+        <path d="M26,32 h56 a3,3 0 0,1 3,3 v38 a3,3 0 0,1 -3,3 h-56 a3,3 0 0,1 -3,-3 v-38 a3,3 0 0,1 3,-3 z" fill="#E50914"/>
+        <path d="M28,35 h5 v4 h-5 z M37,35 h5 v4 h-5 z M46,35 h5 v4 h-5 z M55,35 h5 v4 h-5 z M64,35 h5 v4 h-5 z M73,35 h5 v4 h-5 z M28,69 h5 v4 h-5 z M37,69 h5 v4 h-5 z M46,69 h5 v4 h-5 z M55,69 h5 v4 h-5 z M64,69 h5 v4 h-5 z M73,69 h5 v4 h-5 z" fill="#fff"/>
+        <path d="M28,42 h52 v24 h-52 z" fill="#111"/>
+        <path d="M48,63 V45 H61 M48,54 H58.5" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>
+      <p class="nombre">Flixer TV</p>
+      <p class="que">Películas y series</p>
+      <span class="boton">Bajar e instalar</span>
+    </a>
+
+    <a class="app" href="https://github.com/ingresoloterias-star/flixer-tv-apks/releases/latest/download/cuevana.apk">
+      <svg class="icono" viewBox="18 18 72 72" aria-hidden="true">
+        <rect x="18" y="18" width="72" height="72" fill="#fff"/>
+        <path d="M26,32 h56 a3,3 0 0,1 3,3 v38 a3,3 0 0,1 -3,3 h-56 a3,3 0 0,1 -3,-3 v-38 a3,3 0 0,1 3,-3 z" fill="#1D9BF0"/>
+        <path d="M28,35 h5 v4 h-5 z M37,35 h5 v4 h-5 z M46,35 h5 v4 h-5 z M55,35 h5 v4 h-5 z M64,35 h5 v4 h-5 z M73,35 h5 v4 h-5 z M28,69 h5 v4 h-5 z M37,69 h5 v4 h-5 z M46,69 h5 v4 h-5 z M55,69 h5 v4 h-5 z M64,69 h5 v4 h-5 z M73,69 h5 v4 h-5 z" fill="#fff"/>
+        <path d="M28,42 h52 v24 h-52 z" fill="#111"/>
+        <path d="M61.5,47.5 A9.5,9.5 0 1,0 61.5,60.5" stroke="#fff" stroke-width="5" stroke-linecap="round" fill="none"/>
+      </svg>
+      <p class="nombre">Cuevana TV</p>
+      <p class="que">Películas y series</p>
+      <span class="boton">Bajar e instalar</span>
+    </a>
+  </div>
+
+  <h2>Para que se actualicen solas (una sola vez por tele)</h2>
+  <div class="pasos">
+    <div class="paso">
+      <h3>Fire TV (Amazon)</h3>
+      <ol>
+        <li><b>Configuración</b> → <b>Mi Fire TV</b> → <b>Opciones para desarrolladores</b>.</li>
+        <li><b>Instalar apps desconocidas</b>.</li>
+        <li>Activá cada app que instalaste.</li>
+      </ol>
+    </div>
+    <div class="paso">
+      <h3>Android TV, Google TV o TV box</h3>
+      <ol>
+        <li><b>Configuración</b> → <b>Apps</b> → <b>Seguridad y restricciones</b> (en algunos aparatos: <b>Seguridad</b>).</li>
+        <li><b>Fuentes desconocidas</b>.</li>
+        <li>Activá cada app que instalaste.</li>
+      </ol>
+    </div>
+  </div>
+
+<script>
+  // Con el control remoto: las flechas pasan de una app a otra y OK la baja.
+  var apps = Array.prototype.slice.call(document.querySelectorAll('.app'));
+  if (apps.length) apps[0].focus();
+  document.addEventListener('keydown', function (e) {
+    var i = apps.indexOf(document.activeElement);
+    if (i === -1) return;
+    var columnas = getComputedStyle(document.querySelector('.apps')).gridTemplateColumns.split(' ').length;
+    var paso = { ArrowRight: 1, ArrowLeft: -1, ArrowDown: columnas, ArrowUp: -columnas }[e.key];
+    if (!paso) return;
+    var j = i + paso;
+    if (j >= 0 && j < apps.length) { apps[j].focus(); e.preventDefault(); }
+  });
+</script>
+</body>
+</html>
