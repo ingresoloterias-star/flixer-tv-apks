@@ -58,14 +58,20 @@
     .apps, .pasos { grid-template-columns: 1fr; gap: 16px; }
     .app { padding: 22px 16px; }
   }
+  .aviso {
+    display: none; background: #3a2a00; border: 2px solid var(--foco); border-radius: 14px;
+    padding: 2vh 2vw; margin: 0 0 3vh; font-size: 18px; font-size: clamp(16px, 1.8vw, 26px);
+  }
+  .aviso b { color: var(--foco); }
 </style>
 </head>
 <body>
+  <div class="aviso" id="aviso"></div>
   <h1>Instalá las apps en la tele</h1>
   <p class="bajada">Elegí una con las flechas del control y apretá OK. Cuando termine de bajar, apretá <b>Instalar</b>. Estas tres se actualizan solas.</p>
 
   <div class="apps">
-    <a class="app" href="pelotalibre.apk">
+    <a class="app nuestra" href="pelotalibre.apk" data-box="">
       <svg class="icono" viewBox="18 18 72 72" aria-hidden="true">
         <rect x="18" y="18" width="72" height="72" fill="#1E8E3E"/>
         <defs><clipPath id="pelota"><circle cx="54" cy="54" r="26"/></clipPath></defs>
@@ -84,7 +90,7 @@
       <span class="boton">Bajar e instalar</span>
     </a>
 
-    <a class="app" href="flixer.apk">
+    <a class="app nuestra" href="flixer.apk" data-box="">
       <svg class="icono" viewBox="18 18 72 72" aria-hidden="true">
         <rect x="18" y="18" width="72" height="72" fill="#fff"/>
         <path d="M26,32 h56 a3,3 0 0,1 3,3 v38 a3,3 0 0,1 -3,3 h-56 a3,3 0 0,1 -3,-3 v-38 a3,3 0 0,1 3,-3 z" fill="#E50914"/>
@@ -97,7 +103,7 @@
       <span class="boton">Bajar e instalar</span>
     </a>
 
-    <a class="app" href="cuevana.apk">
+    <a class="app nuestra" href="cuevana.apk" data-box="">
       <svg class="icono" viewBox="18 18 72 72" aria-hidden="true">
         <rect x="18" y="18" width="72" height="72" fill="#fff"/>
         <path d="M26,32 h56 a3,3 0 0,1 3,3 v38 a3,3 0 0,1 -3,3 h-56 a3,3 0 0,1 -3,-3 v-38 a3,3 0 0,1 3,-3 z" fill="#1D9BF0"/>
@@ -111,6 +117,7 @@
     </a>
   </div>
 
+  <div id="seccion-webview">
   <h2>¿TV box donde esta página o las apps se ven mal?</h2>
   <p class="bajada">Algunos TV box traen un navegador interno de hace años. Instalá el oficial de Google y reiniciá el box. Probá primero el de Android 8 y 9: muchos TV box dicen Android 11 pero son Android 9. Si dice "error al analizar el paquete", probá el otro.</p>
   <div class="apps">
@@ -136,6 +143,8 @@
       <p class="que">WebView 154 · 257 MB</p>
       <span class="boton">Bajar e instalar</span>
     </a>
+  </div>
+
   </div>
 
   <h2>Otras apps</h2>
@@ -196,8 +205,35 @@
 <p class="bajada" id="navegador" style="margin-top:5vh"></p>
 <script>
   // Versión del motor que abre la página: en un TV box dice si ya usa el WebView nuevo.
+  // Downloader usa el mismo navegador interno (WebView) que nuestras apps: lo
+  // que ve la página es lo que van a tener ellas. Desde la versión 80 los
+  // navegadores entienden ?. y ?? (Pelota Libre los usa en su reproductor);
+  // con uno anterior las apps normales fallan, y se ofrece la versión TV Box
+  // (el data-box de cada tarjeta) si ya existe. Escrito sin nada moderno,
+  // para que lo entienda un navegador 66.
+  var MINIMA = 80;
   var m = navigator.userAgent.match(/Chrome\/(\d+)/), a = navigator.userAgent.match(/Android ([\d.]+)/);
-  document.getElementById('navegador').textContent = (a ? 'Android ' + a[1] + ' · ' : '') + 'Navegador de este aparato: ' + (m ? 'versión ' + m[1] + (+m[1] < 100 ? ' (vieja: instalá el Navegador para TV box)' : ' (al día)') : navigator.userAgent);
+  var version = m ? +m[1] : 0;
+  var vieja = version > 0 && version < MINIMA;
+  document.getElementById('navegador').textContent = (a ? 'Android ' + a[1] + ' · ' : '') + 'Navegador de este aparato: ' +
+    (version ? 'versión ' + version + (vieja ? ' (vieja)' : ' (al día)') : navigator.userAgent);
+  document.getElementById('seccion-webview').style.display = vieja ? '' : 'none';
+  if (vieja) {
+    var nuestras = document.querySelectorAll('.app.nuestra'), hayBox = false;
+    for (var k = 0; k < nuestras.length; k++) {
+      var box = nuestras[k].getAttribute('data-box');
+      if (!box) continue;
+      hayBox = true;
+      nuestras[k].setAttribute('href', box);
+      nuestras[k].querySelector('.nombre').textContent += ' (TV Box)';
+    }
+    var aviso = document.getElementById('aviso');
+    aviso.innerHTML = 'Este aparato tiene un navegador interno <b>viejo (versión ' + version + ')</b>. ' +
+      (hayBox
+        ? 'Te ofrecemos las versiones <b>TV Box</b> de las apps, hechas para aparatos así.'
+        : 'Pelota Libre, Flixer y Cuevana pueden no funcionar bien acá. Probá instalar el navegador de más abajo y reiniciá; si sigue diciendo versión ' + version + ', este aparato no lo permite.');
+    aviso.style.display = 'block';
+  }
 </script>
 <script>
   // Con el control remoto: las flechas pasan de una app a otra y OK la baja.
@@ -210,7 +246,7 @@
     var centro = function (el) { var r = el.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; };
     var a = centro(document.activeElement), mejor = null, menor = Infinity;
     apps.forEach(function (el) {
-      if (el === document.activeElement) return;
+      if (el === document.activeElement || !el.offsetParent) return; // oculta (sección del navegador)
       var b = centro(el), dx = b[0] - a[0], dy = b[1] - a[1];
       var avance = dx * dir[0] + dy * dir[1];
       if (avance <= 1) return;
