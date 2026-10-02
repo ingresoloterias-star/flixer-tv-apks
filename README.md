@@ -16,7 +16,7 @@ aviso de instalación; alcanza con apretar **Instalar**.
 3. Abrí Downloader y escribí:
 
    ```
-   tinyurl.com/flixertv
+   tinyurl.com/topoapk
    ```
 
    (Es lo mismo que `ingresoloterias-star.github.io/flixer-tv-apks`.)
