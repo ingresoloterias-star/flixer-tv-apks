@@ -16,8 +16,10 @@ aviso de instalación; alcanza con apretar **Instalar**.
 3. Abrí Downloader y escribí:
 
    ```
-   ingresoloterias-star.github.io/flixer-tv-apks
+   tinyurl.com/flixertv
    ```
+
+   (Es lo mismo que `ingresoloterias-star.github.io/flixer-tv-apks`.)
 
 4. Elegí la app con las flechas, apretá OK y después **Instalar**.
 5. Para que se actualice sola, en el mismo menú del paso 2 activá también la
