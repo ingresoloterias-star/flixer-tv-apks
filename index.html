@@ -20,8 +20,16 @@
     padding: 4vh 4vw 6vh;
     line-height: 1.4;
   }
-  h1 { font-size: clamp(28px, 4.2vw, 56px); margin: 0 0 .3em; letter-spacing: -.01em; }
-  .bajada { font-size: clamp(16px, 1.9vw, 26px); color: var(--suave); margin: 0 0 4vh; max-width: 60ch; }
+  h1 { font-size: 28px; font-size: clamp(28px, 4.2vw, 56px); margin: 0 0 .3em; letter-spacing: -.01em; }
+  .bajada { font-size: 16px; font-size: clamp(16px, 1.9vw, 26px); color: var(--suave); margin: 0 0 4vh; max-width: 60ch; }
+  /* Navegadores viejos (el de Downloader en algunos TV box): sin clamp() ni
+     grid. Cada valor nuevo tiene antes uno fijo de respaldo. */
+  .apps, .pasos { display: flex; flex-wrap: wrap; }
+  .apps > .app { width: 30%; margin: 0 3% 3% 0; }
+  .pasos > .paso { width: 47%; margin: 0 3% 3% 0; }
+  @supports (display: grid) {
+    .apps > .app, .pasos > .paso { width: auto; margin: 0; }
+  }
   .apps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5vw; }
   .app {
     display: flex; flex-direction: column; align-items: center; text-align: center;
@@ -30,19 +38,19 @@
     outline: none; transition: transform .12s ease, border-color .12s ease;
   }
   .app:focus, .app:hover { border-color: var(--foco); transform: scale(1.04); }
-  .icono { width: clamp(96px, 12vw, 180px); height: auto; border-radius: 24%; margin-bottom: 2.2vh; }
-  .nombre { font-size: clamp(22px, 2.6vw, 40px); font-weight: 700; margin: 0; }
-  .que { font-size: clamp(14px, 1.5vw, 22px); color: var(--suave); margin: .3em 0 2.2vh; }
+  .icono { width: 120px; height: 120px; width: clamp(96px, 12vw, 180px); height: clamp(96px, 12vw, 180px); object-fit: contain; border-radius: 24%; margin-bottom: 2.2vh; }
+  .nombre { font-size: 22px; font-size: clamp(22px, 2.6vw, 40px); font-weight: 700; margin: 0; }
+  .que { font-size: 14px; font-size: clamp(14px, 1.5vw, 22px); color: var(--suave); margin: .3em 0 2.2vh; }
   .boton {
-    font-size: clamp(16px, 1.7vw, 26px); font-weight: 700; padding: .55em 1.2em;
+    font-size: 16px; font-size: clamp(16px, 1.7vw, 26px); font-weight: 700; padding: .55em 1.2em;
     border-radius: 999px; background: var(--texto); color: #111;
   }
   .app:focus .boton, .app:hover .boton { background: var(--foco); }
-  h2 { font-size: clamp(20px, 2.4vw, 34px); margin: 6vh 0 2vh; }
+  h2 { font-size: 20px; font-size: clamp(20px, 2.4vw, 34px); margin: 6vh 0 2vh; }
   .pasos { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5vw; }
   .paso { background: var(--tarjeta); border: 1px solid var(--borde); border-radius: 16px; padding: 2.5vh 2vw; }
-  .paso h3 { font-size: clamp(17px, 1.8vw, 26px); margin: 0 0 1vh; }
-  .paso ol { margin: 0; padding-left: 1.3em; font-size: clamp(15px, 1.55vw, 22px); color: var(--suave); }
+  .paso h3 { font-size: 17px; font-size: clamp(17px, 1.8vw, 26px); margin: 0 0 1vh; }
+  .paso ol { margin: 0; padding-left: 1.3em; font-size: 15px; font-size: clamp(15px, 1.55vw, 22px); color: var(--suave); }
   .paso li { margin: .35em 0; }
   .paso b { color: var(--texto); }
   @media (max-width: 700px) {
