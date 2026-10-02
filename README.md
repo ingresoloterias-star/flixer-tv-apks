@@ -30,6 +30,6 @@ formas**.
 
 Las direcciones directas de cada APK, por si hacen falta:
 
-- `github.com/ingresoloterias-star/flixer-tv-apks/releases/latest/download/pelotalibre.apk`
-- `github.com/ingresoloterias-star/flixer-tv-apks/releases/latest/download/flixer.apk`
-- `github.com/ingresoloterias-star/flixer-tv-apks/releases/latest/download/cuevana.apk`
+- `ingresoloterias-star.github.io/flixer-tv-apks/pelotalibre.apk`
+- `ingresoloterias-star.github.io/flixer-tv-apks/flixer.apk`
+- `ingresoloterias-star.github.io/flixer-tv-apks/cuevana.apk`
