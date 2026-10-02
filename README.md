@@ -1,23 +1,33 @@
-# Flixer TV, Cuevana TV y Pelota Libre TV para Fire TV
+# Flixer TV, Cuevana TV y Pelota Libre TV
 
-Versiones publicadas de las tres apps. Una vez instaladas, **se actualizan
-solas**: al abrirse buscan la última versión de acá, la bajan y muestran el
+Apps para Fire TV, Android TV, Google TV y TV box. Una vez instaladas, **se
+actualizan solas**: al abrirse buscan la versión nueva, la bajan y muestran el
 aviso de instalación; alcanza con apretar **Instalar**.
 
-## Instalar en una tele nueva
+## Instalar en una tele
 
-1. En el Fire TV instalá **Downloader** desde la Appstore (el ícono naranja).
-2. En **Configuración → Mi Fire TV → Opciones para desarrolladores →
-   Instalar apps desconocidas**, activá **Downloader**.
-3. Abrí Downloader y escribí la dirección de la app que quieras:
+1. Instalá **Downloader** (el ícono naranja). Está en la Appstore del Fire TV
+   y en Google Play de Android TV / Google TV.
+2. Dale permiso a Downloader para instalar apps:
+   - **Fire TV:** Configuración → Mi Fire TV → Opciones para desarrolladores →
+     Instalar apps desconocidas → Downloader.
+   - **Android TV / Google TV / TV box:** Configuración → Apps → Seguridad y
+     restricciones → Fuentes desconocidas → Downloader.
+3. Abrí Downloader y escribí:
 
-   | App | Dirección |
-   |---|---|
-   | Pelota Libre TV | `github.com/ingresoloterias-star/flixer-tv-apks/releases/latest/download/pelotalibre.apk` |
-   | Flixer TV | `github.com/ingresoloterias-star/flixer-tv-apks/releases/latest/download/flixer.apk` |
-   | Cuevana TV | `github.com/ingresoloterias-star/flixer-tv-apks/releases/latest/download/cuevana.apk` |
+   ```
+   ingresoloterias-star.github.io/flixer-tv-apks
+   ```
 
-4. Cuando termine de bajar, apretá **Instalar**.
-5. Para que después se actualicen solas, volvé a **Instalar apps
-   desconocidas** y activá también **Pelota Libre TV**, **Flixer TV** y
-   **Cuevana TV**. Se hace una sola vez por tele.
+4. Elegí la app con las flechas, apretá OK y después **Instalar**.
+5. Para que se actualice sola, en el mismo menú del paso 2 activá también la
+   app que instalaste. Una sola vez por tele.
+
+Si Google TV muestra un aviso de **Play Protect**, elegí **Instalar de todas
+formas**.
+
+Las direcciones directas de cada APK, por si hacen falta:
+
+- `github.com/ingresoloterias-star/flixer-tv-apks/releases/latest/download/pelotalibre.apk`
+- `github.com/ingresoloterias-star/flixer-tv-apks/releases/latest/download/flixer.apk`
+- `github.com/ingresoloterias-star/flixer-tv-apks/releases/latest/download/cuevana.apk`
