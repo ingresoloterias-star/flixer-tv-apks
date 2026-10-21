@@ -1,0 +1,5 @@
+{
+  "_info": "Dominios de cada sitio, en orden. Las apps (DomainList.kt) los bajan al abrir y los prueban antes que los de fábrica. Si un sitio se muda, se cambia acá y no hace falta publicar una app nueva.",
+  "cuevana": ["cuevana3c.pro", "cuevana3e.pro"],
+  "pelota": ["pelotalibre.biz", "pelotalibre.la"]
+}
