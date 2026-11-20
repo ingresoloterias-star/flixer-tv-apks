@@ -63,6 +63,11 @@
     padding: 2vh 2vw; margin: 0 0 3vh; font-size: 18px; font-size: clamp(16px, 1.8vw, 26px);
   }
   .aviso b { color: var(--foco); }
+  /* Apps que no se pueden instalar en este Android (data-min / data-max). */
+  .app.no-va { opacity: .45; }
+  .app.no-va .boton { background: #5a2a2a; color: #fff; }
+  .app.no-va:focus, .app.no-va:hover { opacity: .8; }
+  .app.no-va:focus .boton, .app.no-va:hover .boton { background: #8a3a3a; }
   /* Ventana para elegir versión (fichas con data-versiones). */
   #elegir {
     display: none; position: fixed; left: 0; top: 0; right: 0; bottom: 0;
@@ -90,7 +95,7 @@
   <p class="bajada">Elegí una con las flechas del control y apretá OK. Cuando termine de bajar, apretá <b>Instalar</b>. Pelota Libre, Flixer y Cuevana se actualizan solas.</p>
 
   <div class="apps">
-    <a class="app nuestra" href="pelotalibre.apk" data-box="https://github.com/ingresoloterias-star/flixer-tv-apks/releases/latest/download/pelotalibre-box.apk">
+    <a class="app nuestra" data-min="7.0" data-min-box="8.0" href="pelotalibre.apk" data-box="https://github.com/ingresoloterias-star/flixer-tv-apks/releases/latest/download/pelotalibre-box.apk">
       <svg class="icono" viewBox="18 18 72 72" aria-hidden="true">
         <rect x="18" y="18" width="72" height="72" fill="#1E8E3E"/>
         <defs><clipPath id="pelota"><circle cx="54" cy="54" r="26"/></clipPath></defs>
@@ -109,7 +114,7 @@
       <span class="boton">Bajar e instalar</span>
     </a>
 
-    <a class="app nuestra" href="flixer.apk" data-box="">
+    <a class="app nuestra" data-min="7.0" href="flixer.apk" data-box="">
       <svg class="icono" viewBox="18 18 72 72" aria-hidden="true">
         <rect x="18" y="18" width="72" height="72" fill="#fff"/>
         <path d="M26,32 h56 a3,3 0 0,1 3,3 v38 a3,3 0 0,1 -3,3 h-56 a3,3 0 0,1 -3,-3 v-38 a3,3 0 0,1 3,-3 z" fill="#E50914"/>
@@ -122,7 +127,7 @@
       <span class="boton">Bajar e instalar</span>
     </a>
 
-    <a class="app nuestra" href="cuevana.apk" data-box="https://github.com/ingresoloterias-star/flixer-tv-apks/releases/latest/download/cuevana-box.apk">
+    <a class="app nuestra" data-min="7.0" data-min-box="8.0" href="cuevana.apk" data-box="https://github.com/ingresoloterias-star/flixer-tv-apks/releases/latest/download/cuevana-box.apk">
       <svg class="icono" viewBox="18 18 72 72" aria-hidden="true">
         <rect x="18" y="18" width="72" height="72" fill="#fff"/>
         <path d="M26,32 h56 a3,3 0 0,1 3,3 v38 a3,3 0 0,1 -3,3 h-56 a3,3 0 0,1 -3,-3 v-38 a3,3 0 0,1 3,-3 z" fill="#1D9BF0"/>
@@ -138,7 +143,7 @@
     <!-- Actualizador de Flow (repo ingresoloterias-star/flow-updater-tv): baja e
          instala la última versión de Flow en el Fire TV. Se avisa sola de sus
          propias versiones nuevas (SelfUpdateChecker); este APK es la v1.2.0. -->
-    <a class="app" href="flow-updater.apk">
+    <a class="app" data-min="8.0" href="flow-updater.apk">
       <svg class="icono" viewBox="18 18 72 72" aria-hidden="true">
         <rect x="18" y="18" width="72" height="72" fill="#1A1A2E"/>
         <g transform="translate(8 8) scale(3.83)">
@@ -163,7 +168,7 @@
   <h2>¿TV box donde esta página o las apps se ven mal?</h2>
   <p class="bajada">Algunos TV box traen un navegador interno de hace años. Instalá el oficial de Google y reiniciá el box. Probá primero el de Android 8 y 9: muchos TV box dicen Android 11 pero son Android 9. Si dice "error al analizar el paquete", probá el otro.</p>
   <div class="apps">
-    <a class="app" href="https://github.com/ingresoloterias-star/flixer-tv-apks/releases/download/webview/webview-google-android8-9.apk">
+    <a class="app" data-min="8.0" data-max="9" href="https://github.com/ingresoloterias-star/flixer-tv-apks/releases/download/webview/webview-google-android8-9.apk">
       <svg class="icono" viewBox="0 0 96 96" aria-hidden="true">
         <rect width="96" height="96" fill="#1a73e8"/>
         <circle cx="48" cy="48" r="26" fill="none" stroke="#fff" stroke-width="5"/>
@@ -174,7 +179,7 @@
       <p class="que">WebView 138 · 212 MB</p>
       <span class="boton">Bajar e instalar</span>
     </a>
-    <a class="app" href="https://github.com/ingresoloterias-star/flixer-tv-apks/releases/download/webview/webview-google-android10.apk">
+    <a class="app" data-min="10" href="https://github.com/ingresoloterias-star/flixer-tv-apks/releases/download/webview/webview-google-android10.apk">
       <svg class="icono" viewBox="0 0 96 96" aria-hidden="true">
         <rect width="96" height="96" fill="#0b57d0"/>
         <circle cx="48" cy="48" r="26" fill="none" stroke="#fff" stroke-width="5"/>
@@ -192,19 +197,19 @@
   <h2>Otras apps</h2>
   <p class="bajada">Estas no se actualizan solas: cuando salga una versión nueva, se vuelve a bajar de acá.</p>
   <div class="apps otras">
-    <a class="app" href="mxltv.apk">
+    <a class="app" data-min="6.0" href="mxltv.apk">
       <img class="icono" src="iconos/mxltv.png" alt="">
       <p class="nombre">MXL TV</p>
       <p class="que">Versión 3.2.5</p>
       <span class="boton">Bajar e instalar</span>
     </a>
-    <a class="app" href="mxlmovies.apk">
+    <a class="app" data-min="6.0" href="mxlmovies.apk">
       <img class="icono" src="iconos/mxlmovies.png" alt="">
       <p class="nombre">MXL Movies</p>
       <p class="que">Versión 3.1.2</p>
       <span class="boton">Bajar e instalar</span>
     </a>
-    <a class="app" href="xuper.apk">
+    <a class="app" data-min="4.4" href="xuper.apk">
       <img class="icono" src="iconos/xuper.png" alt="">
       <p class="nombre">Xuper</p>
       <p class="que">Versión 4.34.4</p>
@@ -213,14 +218,14 @@
     <!-- data-versiones: al apretar se elige cuál bajar (la primera es la más
          nueva y es también el href, por si el script no corre). Las viejas se
          dejan por si una versión nueva no anda en algún aparato. -->
-    <a class="app" href="saltamontes-1.9.1.apk"
+    <a class="app" data-min="5.0" href="saltamontes-1.9.1.apk"
        data-versiones="1.9.1|saltamontes-1.9.1.apk,1.9.0|saltamontes-1.9.0.apk">
       <img class="icono" src="iconos/saltamontes.png" alt="">
       <p class="nombre">Saltamontes</p>
       <p class="que">Versión 1.9.1 · elegí versión</p>
       <span class="boton">Bajar e instalar</span>
     </a>
-    <a class="app" href="saltamontes-lite-2.0.0.apk"
+    <a class="app" data-min="5.0" href="saltamontes-lite-2.0.0.apk"
        data-versiones="2.0.0|saltamontes-lite-2.0.0.apk,1.4.0|saltamontes-lite-1.4.0.apk">
       <img class="icono" src="iconos/saltamontes-lite.png" alt="">
       <p class="nombre">Saltamontes Lite</p>
@@ -231,7 +236,7 @@
          instala apps desde códigos de aftv.news y links de MediaFire. Firmado con
          otra clave que Saltamontes y Lite. Con data-versiones para sumar las que
          salgan sin borrar esta. -->
-    <a class="app" href="saltamontes-downloader-1.0.0.apk"
+    <a class="app" data-min="4.4" href="saltamontes-downloader-1.0.0.apk"
        data-versiones="1.0.0|saltamontes-downloader-1.0.0.apk">
       <img class="icono" src="iconos/saltamontes-downloader.webp" alt="" style="background:#1b1f24;padding:10%">
       <p class="nombre">Saltamontes Downloader</p>
@@ -287,6 +292,8 @@
       if (!box || box.indexOf('/releases/') === -1) continue;
       var copia = fuentes[f].cloneNode(true);
       copia.className = 'app';
+      copia.setAttribute('data-min', copia.getAttribute('data-min-box') || '8.0');
+      copia.removeAttribute('data-min-box');
       copia.removeAttribute('data-box');
       copia.setAttribute('href', box);
       copia.querySelector('.nombre').textContent += ' Box';
@@ -302,6 +309,7 @@
       if (!box) continue;
       hayBox = true;
       nuestras[k].setAttribute('href', box);
+      if (nuestras[k].getAttribute('data-min-box')) nuestras[k].setAttribute('data-min', nuestras[k].getAttribute('data-min-box'));
       nuestras[k].querySelector('.nombre').textContent += ' (TV Box)';
     }
     var aviso = document.getElementById('aviso');
@@ -310,6 +318,50 @@
         ? 'Te ofrecemos las versiones <b>TV Box</b> de las apps, hechas para aparatos así.'
         : 'Pelota Libre, Flixer y Cuevana pueden no funcionar bien acá. Probá instalar el navegador de más abajo y reiniciá; si sigue diciendo versión ' + version + ', este aparato no lo permite.');
     aviso.style.display = 'block';
+  }
+
+  // Apps que no se pueden instalar en este aparato: cada ficha dice desde (y
+  // hasta) qué Android anda, sacado del APK (data-min / data-max). Se ven en
+  // gris con el motivo, y OK explica en vez de bajar un archivo que Android
+  // va a rechazar con un "La aplicación no se instaló" sin decir por qué.
+  // Sin Android en el navegador (una compu) no se marca nada.
+  var numero = function (s) {
+    var p = String(s).split('.');
+    return (+p[0] || 0) + (+p[1] || 0) / 100;
+  };
+  var miAndroid = a ? numero(a[1]) : 0;
+  if (miAndroid) {
+    var fichas = document.querySelectorAll('.app[data-min]');
+    for (var q = 0; q < fichas.length; q++) {
+      var fi = fichas[q], min = fi.getAttribute('data-min'), max = fi.getAttribute('data-max');
+      var motivo = null;
+      if (miAndroid < numero(min)) motivo = 'Necesita Android ' + min + ' o más';
+      else if (max && miAndroid >= numero(max) + 1) motivo = 'Solo hasta Android ' + max;
+      if (!motivo) continue;
+      fi.className += ' no-va';
+      fi.querySelector('.boton').textContent = motivo;
+      fi.setAttribute('data-motivo', motivo);
+    }
+    // Ninguna de las nuestras va (Android 6 o anterior): el aviso de navegador
+    // viejo ofrecía las TV Box, que tampoco van. Se dice lo que pasa.
+    if (document.querySelectorAll('.app.nuestra.no-va').length === document.querySelectorAll('.app.nuestra').length) {
+      var av = document.getElementById('aviso');
+      av.innerHTML = 'Este aparato tiene <b>Android ' + a[1] + '</b>. Pelota Libre, Flixer y Cuevana necesitan ' +
+        '<b>Android 7 o más</b>, así que acá no se pueden instalar. En gris están las apps que no van en este ' +
+        'aparato; las demás sí.';
+      av.style.display = 'block';
+    }
+    // En captura: antes que la ventana de versiones y que el link.
+    document.addEventListener('click', function (e) {
+      var el = e.target;
+      while (el && !(el.className && String(el.className).indexOf('no-va') !== -1)) el = el.parentNode;
+      if (!el) return;
+      e.preventDefault(); e.stopPropagation();
+      var mot = el.getAttribute('data-motivo');
+      var texto = el.querySelector('.nombre').textContent + ' ' + mot.charAt(0).toLowerCase() + mot.slice(1) +
+        '. Este aparato tiene Android ' + a[1] + ': no la deja instalar.';
+      if (window.mostrarMensaje) window.mostrarMensaje(el, texto); else alert(texto);
+    }, true);
   }
 </script>
 <script>
@@ -362,6 +414,17 @@
     lista.appendChild(c);
     ventana.style.display = 'flex';
     lista.firstChild.focus();
+  };
+  // La misma ventana, con un mensaje y "Volver" (apps que no van en este Android).
+  window.mostrarMensaje = function (ficha, texto) {
+    desde = ficha;
+    document.getElementById('elegir-titulo').textContent = texto;
+    var c = document.createElement('a');
+    c.href = '#'; c.textContent = 'Volver';
+    c.addEventListener('click', function (e) { e.preventDefault(); cerrar(); });
+    lista.appendChild(c);
+    ventana.style.display = 'flex';
+    c.focus();
   };
   var conVersiones = document.querySelectorAll('.app[data-versiones]');
   for (var v = 0; v < conVersiones.length; v++) {
