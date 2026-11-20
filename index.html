@@ -63,6 +63,25 @@
     padding: 2vh 2vw; margin: 0 0 3vh; font-size: 18px; font-size: clamp(16px, 1.8vw, 26px);
   }
   .aviso b { color: var(--foco); }
+  /* Ventana para elegir versión (fichas con data-versiones). */
+  #elegir {
+    display: none; position: fixed; left: 0; top: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, .8); z-index: 10; align-items: center; justify-content: center;
+  }
+  #elegir .caja {
+    background: var(--tarjeta); border: 4px solid var(--borde); border-radius: 22px;
+    padding: 4vh 4vw; min-width: 40vw; text-align: center;
+  }
+  #elegir h3 { font-size: 22px; font-size: clamp(22px, 2.6vw, 40px); margin: 0 0 3vh; }
+  #elegir a {
+    display: block; margin: 0 0 1.6vh; padding: .6em 1.2em; border-radius: 999px;
+    font-size: 18px; font-size: clamp(18px, 2vw, 30px); font-weight: 700;
+    background: var(--texto); color: #111; text-decoration: none; outline: none;
+    border: 4px solid transparent;
+  }
+  #elegir a:focus, #elegir a:hover { background: var(--foco); border-color: #fff; }
+  #elegir a.cancelar { background: transparent; color: var(--suave); border-color: var(--borde); }
+  #elegir a.cancelar:focus, #elegir a.cancelar:hover { color: #111; background: var(--foco); }
 </style>
 </head>
 <body>
@@ -191,16 +210,21 @@
       <p class="que">Versión 4.34.4</p>
       <span class="boton">Bajar e instalar</span>
     </a>
-    <a class="app" href="saltamontes.apk">
+    <!-- data-versiones: al apretar se elige cuál bajar (la primera es la más
+         nueva y es también el href, por si el script no corre). Las viejas se
+         dejan por si una versión nueva no anda en algún aparato. -->
+    <a class="app" href="saltamontes-1.9.1.apk"
+       data-versiones="1.9.1|saltamontes-1.9.1.apk,1.9.0|saltamontes-1.9.0.apk">
       <img class="icono" src="iconos/saltamontes.png" alt="">
       <p class="nombre">Saltamontes</p>
-      <p class="que">Versión 1.9.0</p>
+      <p class="que">Versión 1.9.1 · elegí versión</p>
       <span class="boton">Bajar e instalar</span>
     </a>
-    <a class="app" href="saltamontes-lite.apk">
+    <a class="app" href="saltamontes-lite-2.0.0.apk"
+       data-versiones="2.0.0|saltamontes-lite-2.0.0.apk,1.4.0|saltamontes-lite-1.4.0.apk">
       <img class="icono" src="iconos/saltamontes-lite.png" alt="">
       <p class="nombre">Saltamontes Lite</p>
-      <p class="que">Versión 1.4.0</p>
+      <p class="que">Versión 2.0.0 · elegí versión</p>
       <span class="boton">Bajar e instalar</span>
     </a>
   </div>
@@ -298,6 +322,50 @@
     });
     if (mejor) { mejor.focus(); mejor.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); e.preventDefault(); }
   });
+</script>
+<div id="elegir"><div class="caja"><h3 id="elegir-titulo"></h3><div id="elegir-lista"></div></div></div>
+<script>
+  // Fichas con varias versiones (data-versiones="1.9.1|archivo.apk,1.9.0|..."):
+  // OK abre la lista; arriba/abajo eligen, OK baja esa, Atrás o "Cancelar"
+  // vuelve. Sin nada moderno, como el resto (navegadores de TV box viejos).
+  var ventana = document.getElementById('elegir'), lista = document.getElementById('elegir-lista');
+  var desde = null;
+  var cerrar = function () {
+    ventana.style.display = 'none';
+    lista.innerHTML = '';
+    if (desde) desde.focus();
+  };
+  var abrir = function (ficha) {
+    desde = ficha;
+    document.getElementById('elegir-titulo').textContent = '¿Qué versión de ' + ficha.querySelector('.nombre').textContent + '?';
+    var versiones = ficha.getAttribute('data-versiones').split(',');
+    for (var i = 0; i < versiones.length; i++) {
+      var p = versiones[i].split('|'), b = document.createElement('a');
+      b.href = p[1];
+      b.textContent = 'Versión ' + p[0] + (i === 0 ? ' (la más nueva)' : '');
+      lista.appendChild(b);
+    }
+    var c = document.createElement('a');
+    c.href = '#'; c.className = 'cancelar'; c.textContent = 'Cancelar';
+    c.addEventListener('click', function (e) { e.preventDefault(); cerrar(); });
+    lista.appendChild(c);
+    ventana.style.display = 'flex';
+    lista.firstChild.focus();
+  };
+  var conVersiones = document.querySelectorAll('.app[data-versiones]');
+  for (var v = 0; v < conVersiones.length; v++) {
+    conVersiones[v].addEventListener('click', function (e) { e.preventDefault(); abrir(this); });
+  }
+  document.addEventListener('keydown', function (e) {
+    if (ventana.style.display !== 'flex') return;
+    var k = e.key || '', botones = Array.prototype.slice.call(lista.children);
+    var i = botones.indexOf(document.activeElement);
+    if (k === 'ArrowDown' || e.keyCode === 40) { botones[Math.min(botones.length - 1, i + 1)].focus(); }
+    else if (k === 'ArrowUp' || e.keyCode === 38) { botones[Math.max(0, i - 1)].focus(); }
+    else if (k === 'Escape' || k === 'GoBack' || k === 'BrowserBack' || e.keyCode === 27 || e.keyCode === 4) { cerrar(); }
+    else return;
+    e.preventDefault(); e.stopPropagation();
+  }, true);
 </script>
 </body>
 </html>
