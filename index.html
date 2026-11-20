@@ -76,7 +76,10 @@
   #elegir .caja {
     background: var(--tarjeta); border: 4px solid var(--borde); border-radius: 22px;
     padding: 4vh 4vw; min-width: 40vw; text-align: center;
+    max-height: 92vh; overflow-y: auto; /* muchas opciones (Xuper): se desplaza */
   }
+  #elegir a.no-va-op { background: #5a2a2a; color: #fff; opacity: .7; }
+  #elegir a.no-va-op:focus { background: #8a3a3a; opacity: 1; }
   #elegir h3 { font-size: 22px; font-size: clamp(22px, 2.6vw, 40px); margin: 0 0 3vh; }
   #elegir a {
     display: block; margin: 0 0 1.6vh; padding: .6em 1.2em; border-radius: 999px;
@@ -209,10 +212,16 @@
       <p class="que">Versión 3.1.2</p>
       <span class="boton">Bajar e instalar</span>
     </a>
-    <a class="app" data-min="4.4" href="xuper.apk">
+    <!-- data-opciones: "texto|archivo|Android mínimo", una por variante. Las
+         variantes (códigos de Downloader que circulan) son grandes: van en la
+         release "xuper" del repo, no en la página. Son modificaciones firmadas
+         por otros: cada una se instala aparte, salvo By Focus, que usa el
+         mismo paquete que el original (com.lite.fczx) con otra firma. -->
+    <a class="app" data-min="4.4" href="xuper.apk"
+       data-opciones="Xuper original · TV · 4.34.4|xuper.apk|4.4,Xuper Hydra 4K · TV · 4.34.4|https://github.com/ingresoloterias-star/flixer-tv-apks/releases/download/xuper/xuper-hydra-tv-4.34.4.apk|4.4,Xuper Hydra · Celular · 6.5.20|https://github.com/ingresoloterias-star/flixer-tv-apks/releases/download/xuper/xuper-hydra-movil-6.5.20.apk|5.1,WiwyXuper (ESPN y DirecTV Sports) · TV · 4.35.1|https://github.com/ingresoloterias-star/flixer-tv-apks/releases/download/xuper/wiwyxuper-tv-4.35.1.apk|4.4,WiwyXuper · Celular · 6.5.20|https://github.com/ingresoloterias-star/flixer-tv-apks/releases/download/xuper/wiwyxuper-movil-6.5.20.apk|5.1,Xuper TV NF (con VPN) · TV · 4.35.1|https://github.com/ingresoloterias-star/flixer-tv-apks/releases/download/xuper/xuper-nf-tv-4.35.1.apk|4.4,Xuper NF · Celular · 6.5.9|https://github.com/ingresoloterias-star/flixer-tv-apks/releases/download/xuper/xuper-nf-movil-6.5.9.apk|4.4,Xuper By Focus · TV · 4.34.4 (reemplaza al original: desinstalalo antes)|https://github.com/ingresoloterias-star/flixer-tv-apks/releases/download/xuper/xuper-focus-tv-4.34.4.apk|4.4">
       <img class="icono" src="iconos/xuper.png" alt="">
       <p class="nombre">Xuper</p>
-      <p class="que">Versión 4.34.4</p>
+      <p class="que">8 versiones · elegí cuál</p>
       <span class="boton">Bajar e instalar</span>
     </a>
     <!-- data-versiones: al apretar se elige cuál bajar (la primera es la más
@@ -354,7 +363,8 @@
     // En captura: antes que la ventana de versiones y que el link.
     document.addEventListener('click', function (e) {
       var el = e.target;
-      while (el && !(el.className && String(el.className).indexOf('no-va') !== -1)) el = el.parentNode;
+      // Solo fichas (clase "no-va" exacta; las opciones de la ventana usan "no-va-op").
+      while (el && !(el.className && /(^|\s)no-va(\s|$)/.test(String(el.className)))) el = el.parentNode;
       if (!el) return;
       e.preventDefault(); e.stopPropagation();
       var mot = el.getAttribute('data-motivo');
@@ -400,12 +410,28 @@
   };
   var abrir = function (ficha) {
     desde = ficha;
-    document.getElementById('elegir-titulo').textContent = '¿Qué versión de ' + ficha.querySelector('.nombre').textContent + '?';
-    var versiones = ficha.getAttribute('data-versiones').split(',');
-    for (var i = 0; i < versiones.length; i++) {
-      var p = versiones[i].split('|'), b = document.createElement('a');
+    var nombre = ficha.querySelector('.nombre').textContent;
+    // data-versiones: "1.9.1|archivo" (versiones de una misma app).
+    // data-opciones: "texto|archivo|Android mínimo" (variantes con nombre propio).
+    var opciones = ficha.getAttribute('data-opciones');
+    document.getElementById('elegir-titulo').textContent = opciones ? '¿Cuál ' + nombre + ' querés instalar?' : '¿Qué versión de ' + nombre + '?';
+    var items = (opciones || ficha.getAttribute('data-versiones')).split(',');
+    for (var i = 0; i < items.length; i++) {
+      var p = items[i].split('|'), b = document.createElement('a');
       b.href = p[1];
-      b.textContent = 'Versión ' + p[0] + (i === 0 ? ' (la más nueva)' : '');
+      b.textContent = opciones ? p[0] : 'Versión ' + p[0] + (i === 0 ? ' (la más nueva)' : '');
+      // Una variante que no va en este Android: en rojo, y OK explica.
+      if (opciones && p[2] && typeof miAndroid !== 'undefined' && miAndroid && miAndroid < numero(p[2])) {
+        b.className = 'no-va-op';
+        b.textContent += ' · necesita Android ' + p[2];
+        b.setAttribute('data-texto', p[0].split(' · ')[0] + ' necesita Android ' + p[2] + ' o más. Este aparato tiene Android ' + a[1] + ': no la deja instalar.');
+        b.addEventListener('click', function (e) {
+          e.preventDefault();
+          var t = this.getAttribute('data-texto');
+          lista.innerHTML = '';
+          window.mostrarMensaje(desde, t);
+        });
+      }
       lista.appendChild(b);
     }
     var c = document.createElement('a');
@@ -426,7 +452,7 @@
     ventana.style.display = 'flex';
     c.focus();
   };
-  var conVersiones = document.querySelectorAll('.app[data-versiones]');
+  var conVersiones = document.querySelectorAll('.app[data-versiones], .app[data-opciones]');
   for (var v = 0; v < conVersiones.length; v++) {
     conVersiones[v].addEventListener('click', function (e) { e.preventDefault(); abrir(this); });
   }
@@ -434,8 +460,9 @@
     if (ventana.style.display !== 'flex') return;
     var k = e.key || '', botones = Array.prototype.slice.call(lista.children);
     var i = botones.indexOf(document.activeElement);
-    if (k === 'ArrowDown' || e.keyCode === 40) { botones[Math.min(botones.length - 1, i + 1)].focus(); }
-    else if (k === 'ArrowUp' || e.keyCode === 38) { botones[Math.max(0, i - 1)].focus(); }
+    var ir = function (b) { b.focus(); if (b.scrollIntoView) b.scrollIntoView({ block: 'nearest' }); };
+    if (k === 'ArrowDown' || e.keyCode === 40) { ir(botones[Math.min(botones.length - 1, i + 1)]); }
+    else if (k === 'ArrowUp' || e.keyCode === 38) { ir(botones[Math.max(0, i - 1)]); }
     else if (k === 'Escape' || k === 'GoBack' || k === 'BrowserBack' || e.keyCode === 27 || e.keyCode === 4) { cerrar(); }
     else return;
     e.preventDefault(); e.stopPropagation();
