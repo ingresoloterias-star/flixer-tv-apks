@@ -1,0 +1,29 @@
+# Cada 6 horas revisa si Cuevana o Pelota Libre se mudaron de dominio y, si
+# es así, actualiza dominios.json. Las apps la bajan al abrir: se enteran solas,
+# sin publicar una versión nueva. También se puede correr a mano (Actions).
+name: Dominios
+
+on:
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  revisar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Revisar dominios
+        run: python3 .github/scripts/dominios.py
+      - name: Guardar si cambió
+        run: |
+          if [ -f cambios.txt ]; then
+            git config user.name "dominios-bot"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add dominios.json
+            git commit -m "Dominios: $(cat cambios.txt)"
+            git push
+          fi
